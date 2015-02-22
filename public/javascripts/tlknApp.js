@@ -71,7 +71,14 @@ Tlkn.controller('HomeController',['$scope','$cookieStore','$http','$location','n
 			$scope.leaveData.access_token = $cookieStore.get("access_token")
 			$scope.format = 'dd-MM-yyyy';
 			$scope.startminDate = new Date();
+			var count = 10
 			$scope.getLeave = function(){
+				if(count == 10){
+					count = 11
+				}
+				else{
+					count = 10
+				}
 				var getleaveData = {}
 				getleaveData.access_token = $cookieStore.get('access_token')
 				$http.post(appConifg.apiURL+'/get/leave',getleaveData)
@@ -80,7 +87,7 @@ Tlkn.controller('HomeController',['$scope','$cookieStore','$http','$location','n
 					$scope.JsonData = data
 					$scope.tableParams = new ngTableParams({
 						page: 1,         
-						count: 10        
+						count: count        
 					}, {
 						total: $scope.JsonData.length,
 						getData: function($defer, params) {
@@ -147,8 +154,14 @@ Tlkn.controller('AdminController',['$scope','$cookieStore','$http','$location','
 				,accept:"approved"
 				,reject :"rejected"
 			}
-
-			$scope.getLeave = function(count){
+			var count = 10
+			$scope.getLeave = function(){
+				if(count == 10){
+					count = 11
+				}
+				else{
+					count = 10
+				}
 				var getleaveData = {}
 				getleaveData.access_token = $cookieStore.get('access_token')
 				$http.post(appConifg.apiURL+'/get/leave',getleaveData)
@@ -167,12 +180,16 @@ Tlkn.controller('AdminController',['$scope','$cookieStore','$http','$location','
 							$defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
 						}
 					});
+					$scope.tableParams.settings().$scope = $scope;
+				    if($scope.tableParams){
+				    	$scope.tableParams.reload();
+				    }
 				})
 				.error(function(data){
 					alert(data)
 				})
 			}
-			$scope.getLeave(11)
+			$scope.getLeave()
 
 			$scope.assign_status = function(data){
 				$scope.edit_leave = true;
@@ -187,7 +204,7 @@ Tlkn.controller('AdminController',['$scope','$cookieStore','$http','$location','
 				.success(function(data){
 					alert("Leave updated succesfully")
 					$scope.edit_leave = false;
-					$scope.getLeave(10)
+					$scope.getLeave()
 					console.log(data)
 				})
 				.error(function(data){

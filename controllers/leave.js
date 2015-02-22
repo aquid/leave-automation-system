@@ -51,7 +51,6 @@ module.exports.createLeave = function(req,res){
 						return res.status(400).send('Error creating leave. Plaese try again')
 					}
 					else{
-						console.log(duration)
 						return res.status(200).send(leave)
 					}
 				})
@@ -69,7 +68,6 @@ module.exports.getLeave = function(req, res){
 	}
 	else{
 		claims = jwt.decode(access_token,constants.secret_key)
-		console.log(claims)
 		if(claims){
 			var user = {
 				emp_id:claims._id
@@ -80,7 +78,6 @@ module.exports.getLeave = function(req, res){
 						return res.status(400).send("Error getting leaves")
 					}
 					else{
-						console.log(leaves)
 						return res.status(200).send(leaves)
 					}
 				})
@@ -91,7 +88,6 @@ module.exports.getLeave = function(req, res){
 						return res.status(400).send("Error getting leaves")
 					}
 					else{
-						console.log(leaves)
 						return res.status(200).send(leaves)
 					}
 				})
@@ -108,7 +104,6 @@ module.exports.editLeave = function(req, res){
 	}
 	else{
 		claims = jwt.decode(access_token,constants.secret_key)
-		console.log(claims)
 		if(!claims){
 			return res.status(400).send("Invalid Access Token")
 		}
@@ -123,7 +118,6 @@ module.exports.editLeave = function(req, res){
 				}
 				sql.connection.query('UPDATE leave_data SET ? WHERE leave_id = ?', [leave_status,leave_id] , function (err,result){
 					if(err){
-						console.log(err)
 						return res.status(400).send("Error Updating leave")
 					}
 					else{
