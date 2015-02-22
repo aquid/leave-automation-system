@@ -1,0 +1,57 @@
+<nav class="navbar navbar-fixed-top navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<p class="navbar-brand"> TLKN</p>
+			<!-- <a href="#"><img class="navbar-brand" src="/images/logo.png"></a> -->
+		</div>
+		<div>
+			<button type="button" class ='logoutButton btn btn-default navbar-btn navbar-right' ng-click='signOut()'>Sign Out</button>
+		</div>
+	</div>
+</nav>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 col-xs-12 col-md-offset-3">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Select a date range to apply for leave</h3>
+				</div>
+				<div class="panel-body">
+					<form role="form" name="leaveForm" ng-submit='leaveCreate(leaveData)'>
+						<div class="form-group">
+							<label for="inputEmail3">Select Start Date And End Date for Leave</label>
+							<div class="form-inline">
+								<div class="input-group">
+									<input type="text" class="form-control" ng-click="startopen($event)" datepicker-popup="{{format}}" ng-model="leaveData.start_date"  is-open="startopened" min-date="startminDate" max-date="'2015-12-31'" ng-required="true" close-text="Close" placeholder="Start Date" />
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="startopen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+									</span>
+								</div>
+								<div class="input-group">
+									<input type="text" class="form-control" ng-click="endopen($event)" datepicker-popup="{{format}}" ng-model="leaveData.end_date"  is-open="endopened" min-date="leaveData.start_date" max-date="'2015-12-31'" ng-required="true" close-text="Close" placeholder="End Date" />
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="endopen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+									</span>
+								</div>
+								<button type="submit" ng-disabled="leaveForm.$invalid" class="btn btn-danger">Create</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 col-xs-12">
+			<table ng-table="tableParams" class="table" show-filter="true">
+				<tr ng-repeat="data in $data ">
+					<td data-title="'Leave Id'" sortable="'leave_id'" filter="{'leave_id':'text'}" style="width:10%;" >{{data.leave_id}}</td>
+					<td data-title="'Duration'" sortable="'duration'" >{{data.duration}}</td>
+					<td data-title="'Start Date'" sortable="'start_date'" >{{data.start_date  | date:'d-MMM-yyyy'}}</td>
+					<td data-title="'End Date'" sortable="'end_date'" >{{data.end_date  | date:'d-MMM-yyyy'}}</td>
+					<td data-title="'Status'" sortable="'status'" >{{data.status}}</td>
+					<td data-title="'Status Reason'" >{{data.status_code}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
